@@ -24,7 +24,7 @@ suspend fun main() {
     val testsManager = TestsManager()
     val questionsManager = QuestionsManager()
 
-    embeddedServer(Netty, port = System.getenv("PORT").toInt() :? 8080, host = "0.0.0.0") {
+    embeddedServer(Netty, port = System.getenv("PORT").toInt() ?: 8080, host = "0.0.0.0") {
 
         install(ContentNegotiation) {
             json(
