@@ -56,11 +56,14 @@ class UserManager {
                 val res =
                     UsersTests.select { (UsersTests.test eq it.id) and (UsersTests.user eq user.id) }.firstOrNull()
                 res?.let { rr ->
-                    UserTestsModel(
-                        max = rr[UsersTests.max],
-                        current = rr[UsersTests.current],
-                        testTitle = it.title
-                    )
+                    if (rr[UsersTests.current] != 0.0) {
+                        UserTestsModel(
+                            current = rr[UsersTests.current],
+                            testTitle = it.title
+                        )
+                    } else {
+                        null
+                    }
                 }
             }
         }

@@ -28,7 +28,6 @@ data class UserInfoModel(
 
 @Serializable
 data class UserTestsModel(
-    val max: Double,
     val current: Double,
     val testTitle: String
 )

@@ -32,8 +32,7 @@ class TestsManager {
                     id = it[UsersTests.test].value,
                     title = Test[it[UsersTests.test]].title,
                     category = Test[it[UsersTests.test]].category.id.value,
-                    current = it[UsersTests.current],
-                    max = it[UsersTests.max]
+                    current = it[UsersTests.current]
                 )
             }
         }

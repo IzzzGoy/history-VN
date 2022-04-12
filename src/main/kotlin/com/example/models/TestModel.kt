@@ -15,5 +15,4 @@ data class TestModelWithResult(
     val title: String,
     val category: Int,
     val current: Double,
-    val max: Double
 )

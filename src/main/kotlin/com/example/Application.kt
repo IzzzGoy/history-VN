@@ -9,6 +9,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.json.Json
@@ -99,6 +100,13 @@ suspend fun main() {
                     get("{id}") {
                         call.respond(
                             questionsManager.getByTest(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
+                        )
+                    }
+                    post("check_results") {
+                        call.respond(
+                            questionsManager.checkResults(
+                                call.receive()
+                            )
                         )
                     }
                 }
