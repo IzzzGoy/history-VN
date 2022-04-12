@@ -88,7 +88,7 @@ suspend fun main() {
                         )
                     }
                 }
-                route("tests/category/") {
+                route("tests") {
                     get("{id}") {
                         call.respond(
                             testsManager.getTestsByCategory(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
