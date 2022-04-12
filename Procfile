@@ -1,0 +1,1 @@
+web: ./build/install/history-VN/bin/history-VN
