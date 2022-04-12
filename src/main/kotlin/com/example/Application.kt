@@ -25,7 +25,7 @@ suspend fun main() {
     val testsManager = TestsManager()
     val questionsManager = QuestionsManager()
 
-    embeddedServer(Netty, port = System.getenv("PORT").toInt() ?: 8080, host = "0.0.0.0") {
+    embeddedServer(Netty, port = System.getenv("PORT")?.toInt() ?: 8080, host = "0.0.0.0") {
 
         install(ContentNegotiation) {
             json(
@@ -88,7 +88,7 @@ suspend fun main() {
                         )
                     }
                 }
-                route("tests") {
+                route("tests/category/") {
                     get("{id}") {
                         call.respond(
                             testsManager.getTestsByCategory(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
