@@ -62,6 +62,10 @@ suspend fun main() {
                         call.respond(userManager.login(login, password))
                     }
 
+                    post("register") {
+                        call.respond(userManager.register(call.receive()))
+                    }
+
                     get("tests/{id}") {
                         call.respond(
                             userManager.userTestsInfo(

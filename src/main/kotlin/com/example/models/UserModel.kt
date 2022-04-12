@@ -27,6 +27,16 @@ data class UserInfoModel(
 )
 
 @Serializable
+data class UserRegisterModel(
+    val lastName: String,
+    val firstName: String,
+    val midlleName: String,
+    val login: String,
+    val password: String,
+    val picture: Int?,
+)
+
+@Serializable
 data class UserTestsModel(
     val current: Double,
     val testTitle: String
