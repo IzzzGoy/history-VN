@@ -15,3 +15,4 @@ class Image(id: EntityID<Int>): IntEntity(id) {
 
     var url by Images.url
 }
+
