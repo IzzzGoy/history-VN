@@ -15,6 +15,7 @@ class QuestionsManager {
     private val mapper = object {
         fun map(question: Question) = QuestionModel(
             id = question.id.value,
+            title = question.question,
             answers = AnswerPossibles.find { AnswerPossibilities.question eq question.id }.map {
                 AnswerModel(
                     id = it.id.value,
