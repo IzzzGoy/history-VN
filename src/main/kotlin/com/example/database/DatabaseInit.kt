@@ -18,7 +18,7 @@ suspend fun initDatabase() = withContext(Dispatchers.IO) {
     )
 
     newSuspendedTransaction(Dispatchers.IO) {
-        SchemaUtils.createMissingTablesAndColumns(
+        /*SchemaUtils.createMissingTablesAndColumns(
             Images,
             Users,
             Categories,
@@ -29,6 +29,6 @@ suspend fun initDatabase() = withContext(Dispatchers.IO) {
             Objects,
             ObjectsImages,
             Informations
-        )
+        )*/
     }
 }
