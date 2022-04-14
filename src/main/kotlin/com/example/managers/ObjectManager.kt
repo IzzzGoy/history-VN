@@ -24,4 +24,5 @@ class ObjectManager {
             Object.find { Objects.category eq category.id }.map(mapper::map)
         } ?: throw Exception("Unknown id")
     }
+
 }
