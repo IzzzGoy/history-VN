@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.ReferenceOption
 object AnswerPossibilities: IntIdTable() {
     val possible = text("possible")
     val question = reference("question", Questions, onUpdate = ReferenceOption.CASCADE, onDelete = ReferenceOption.CASCADE)
+    val isRight = bool("is_answer_right")
 }
 
 class AnswerPossibles(id: EntityID<Int>): IntEntity(id) {
@@ -16,4 +17,5 @@ class AnswerPossibles(id: EntityID<Int>): IntEntity(id) {
 
     var possible by AnswerPossibilities.possible
     var question by Question referencedOn AnswerPossibilities.question
+    var isRight by AnswerPossibilities.isRight
 }

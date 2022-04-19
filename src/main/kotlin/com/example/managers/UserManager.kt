@@ -1,10 +1,9 @@
 package com.example.managers
 
-import com.example.database.tables.User
-import com.example.database.tables.Users
-import com.example.database.tables.UsersTests
+import com.example.database.tables.*
 import com.example.models.UserInfoModel
 import com.example.models.UserModel
+import com.example.models.UserRegisterModel
 import com.example.models.UserTestsModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.and
@@ -50,20 +49,39 @@ class UserManager {
         }.firstOrNull()?.let(mapper::infoMap) ?: throw Exception("User not found")
     }
 
+    suspend fun register(userRegisterModel: UserRegisterModel) = newSuspendedTransaction {
+        User.new {
+            lastName = userRegisterModel.lastName
+            firstName = userRegisterModel.firstName
+            midlleName = userRegisterModel.midlleName
+            login = userRegisterModel.login
+            password = userRegisterModel.password
+            pictureId = userRegisterModel.picture?.let { Image.findById(it) ?: Image.findById(1) } ?: Image[1]
+            role = Role.USER
+            rating = 0.0
+            tests = Test.all()
+        }.let { mapper.infoMap(it) }
+    }
+
     suspend fun userTestsInfo(id: Int) = newSuspendedTransaction(Dispatchers.IO) {
         (User.findById(id) ?: throw Exception("User not found")).let { user ->
             user.tests.mapNotNull {
                 val res =
                     UsersTests.select { (UsersTests.test eq it.id) and (UsersTests.user eq user.id) }.firstOrNull()
                 res?.let { rr ->
-                    UserTestsModel(
-                        max = rr[UsersTests.max],
-                        current = rr[UsersTests.current],
-                        testTitle = it.title
-                    )
+                    if (rr[UsersTests.current] != 0.0) {
+                        UserTestsModel(
+                            current = rr[UsersTests.current],
+                            testTitle = it.title
+                        )
+                    } else {
+                        null
+                    }
                 }
             }
         }
     }
+
+
 
 }

@@ -9,6 +9,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.json.Json
@@ -24,7 +25,7 @@ suspend fun main() {
     val testsManager = TestsManager()
     val questionsManager = QuestionsManager()
 
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+    embeddedServer(Netty, port = System.getenv("PORT")?.toInt() ?: 8080, host = "0.0.0.0") {
 
         install(ContentNegotiation) {
             json(
@@ -61,6 +62,10 @@ suspend fun main() {
                         call.respond(userManager.login(login, password))
                     }
 
+                    post("register") {
+                        call.respond(userManager.register(call.receive()))
+                    }
+
                     get("tests/{id}") {
                         call.respond(
                             userManager.userTestsInfo(
@@ -89,11 +94,23 @@ suspend fun main() {
                             testsManager.getTestsByCategory(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
                         )
                     }
+                    get("results/{id}") {
+                        call.respond(
+                            testsManager.getUserTestsResults(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
+                        )
+                    }
                 }
                 route("questions") {
                     get("{id}") {
                         call.respond(
                             questionsManager.getByTest(call.parameters["id"]?.toInt() ?: throw Exception("Missing id"))
+                        )
+                    }
+                    post("check_results") {
+                        call.respond(
+                            questionsManager.checkResults(
+                                call.receive()
+                            )
                         )
                     }
                 }

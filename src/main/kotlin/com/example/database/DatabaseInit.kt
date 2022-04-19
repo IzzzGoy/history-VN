@@ -11,14 +11,14 @@ import kotlin.reflect.jvm.jvmName
 
 suspend fun initDatabase() = withContext(Dispatchers.IO) {
     Database.connect(
-        url = "jdbc:postgresql://db.sdasujlqlftjjgehyqiv.supabase.co:5432/postgres",
+        url = "jdbc:postgresql://db.kwyaztjifkgvzlloxljj.supabase.co:5432/postgres",
         user = "postgres",
-        password = "sev8624donlog159753mod",
+        password = "061241angel_ZHqwerty",
         driver = Driver::class.jvmName
     )
 
     newSuspendedTransaction(Dispatchers.IO) {
-        SchemaUtils.createMissingTablesAndColumns(
+        /*SchemaUtils.createMissingTablesAndColumns(
             Images,
             Users,
             Categories,
@@ -29,6 +29,6 @@ suspend fun initDatabase() = withContext(Dispatchers.IO) {
             Objects,
             ObjectsImages,
             Informations
-        )
+        )*/
     }
 }
